@@ -51,7 +51,6 @@ Thumbs.db
 nbproject/*
 nbproject/private/
 nbbuild/
-dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
@@ -78,6 +77,7 @@ node_modules
 
 # production
 build
+dist
 
 # misc
 *.pem
@@ -104,3 +104,6 @@ next-env.d.ts
 # Temporary and runtime files
 .temp
 /runtime
+
+# React Router
+/.react-router/

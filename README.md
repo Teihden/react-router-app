@@ -2,7 +2,7 @@
 
 ## Description
 
-**Router-app** is a sample project inspired by the [React Router Address Book Tutorial](https://reactrouter.com/tutorials/address-book). 
+**React-router-app** is a sample project inspired by the [React Router Address Book Tutorial](https://reactrouter.com/tutorials/address-book). 
 This application demonstrates the core features of client-side routing in React, including form handling, navigation links, and asynchronous data loading.
 
 ## Features
@@ -17,31 +17,49 @@ This application demonstrates the core features of client-side routing in React,
 
 1. Clone the repository:
 
-    ```bash
+    ```sh
     git clone <repository-url>
-    cd router-app
+    cd react-router-app
     ```
 
 2. Install dependencies:
 
-    ```bash
+    ```sh
     npm install
     ```
 
 3. Start the development server:
 
-    ```bash
-    npm start
+    ```sh
+    npm run dev
     ```
 
-4. Open your browser and visit [http://localhost:3000](http://localhost:3000).
+This starts your app in development mode, rebuilding assets on file changes.
 
-## Project Structure
+## Deployment
 
-- `/src` — Application source code
-    - `components` — UI components
-    - `routes` — Page components and routing logic
-    - `services` — Data/API utilities
+First, build your app for production:
+
+```sh
+npm run build
+```
+
+Then run the app in production mode:
+
+```sh
+npm start
+```
+
+Now you'll need to pick a host to deploy it to.
+
+### DIY
+
+If you're familiar with deploying node applications, the built-in React Router app server is production-ready.
+
+Make sure to deploy the output of `react-router build`
+
+- `build/server`
+- `build/client`
 
 ---
 
