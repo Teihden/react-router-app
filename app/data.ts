@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-// 🛑 Nothing in here has anything to do with React Router, it's just a fake database
+// 🛑 Nothing in here has anything to do with React Router; it's just a fake database
 ////////////////////////////////////////////////////////////////////////////////
 
 import { matchSorter } from "match-sorter";
@@ -67,15 +67,14 @@ export async function getContacts(query?: string | null) {
   let contacts = await fakeContacts.getAll();
   if (query) {
     contacts = matchSorter(contacts, query, {
-      keys: ["first", "last"],
+      keys: [ "first", "last" ],
     });
   }
   return contacts.sort(sortBy("last", "createdAt"));
 }
 
 export async function createEmptyContact() {
-  const contact = await fakeContacts.create({});
-  return contact;
+  return await fakeContacts.create({});
 }
 
 export async function getContact(id: string) {
@@ -84,9 +83,11 @@ export async function getContact(id: string) {
 
 export async function updateContact(id: string, updates: ContactMutation) {
   const contact = await fakeContacts.get(id);
+
   if (!contact) {
     throw new Error(`No contact found for ${id}`);
   }
+
   await fakeContacts.set(id, { ...contact, ...updates });
   return contact;
 }
