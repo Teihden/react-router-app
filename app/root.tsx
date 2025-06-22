@@ -1,12 +1,13 @@
 import React from "react";
-import { isRouteErrorResponse, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { isRouteErrorResponse, Outlet, redirect, Scripts, ScrollRestoration } from "react-router";
 import type { Route } from "./+types/root";
 import appStylesHref from "./app.css?url";
 import { createEmptyContact } from "./data";
 
 export async function action() {
   const contact = await createEmptyContact();
-  return { contact };
+
+  return redirect(`/contacts/${contact.id}/edit`);
 }
 
 export default function App() {
