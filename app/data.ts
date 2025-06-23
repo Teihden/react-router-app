@@ -65,11 +65,13 @@ const fakeContacts = {
 export async function getContacts(query?: string | null) {
   await new Promise((resolve) => setTimeout(resolve, 500));
   let contacts = await fakeContacts.getAll();
+
   if (query) {
     contacts = matchSorter(contacts, query, {
       keys: [ "first", "last" ],
     });
   }
+
   return contacts.sort(sortBy("last", "createdAt"));
 }
 

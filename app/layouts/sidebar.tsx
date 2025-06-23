@@ -1,16 +1,25 @@
 import { Form, Link, NavLink, Outlet, useNavigation } from "react-router";
 import { getContacts } from "../data";
 import type { Route } from "./+types/sidebar";
+import { useEffect, useState } from "react";
 
-export async function loader() {
-  const contacts = await getContacts();
+export async function loader({ request }: Route.LoaderArgs) {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q");
+  const contacts = await getContacts(q);
 
-  return { contacts };
+  return { contacts, q };
 }
 
+
 export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
-  const { contacts } = loaderData;
+  const { contacts, q } = loaderData;
   const navigation = useNavigation();
+  const [query, setQuery] = useState(q || "");
+
+  useEffect(() => {
+    setQuery(q ?? "");
+  }, [q]);
 
   return (
     <>
@@ -21,11 +30,13 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
         <div>
           <Form id="search-form" role="search">
             <input
-              aria-label="Search contacts"
               id="q"
               name="q"
-              placeholder="Search"
               type="search"
+              placeholder="Search"
+              aria-label="Search contacts"
+              onChange={(e) => setQuery(e.currentTarget.value)}
+              value={query}
             />
             <div
               aria-hidden
