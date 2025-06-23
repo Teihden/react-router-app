@@ -1,4 +1,4 @@
-import { Form, Link, NavLink, Outlet, useNavigation } from "react-router";
+import { Form, Link, NavLink, Outlet, useNavigation, useSubmit } from "react-router";
 import { getContacts } from "../data";
 import type { Route } from "./+types/sidebar";
 import { useEffect, useState } from "react";
@@ -15,6 +15,10 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
   const { contacts, q } = loaderData;
   const navigation = useNavigation();
+  const submit = useSubmit();
+  const searching =
+    navigation.location
+    && new URLSearchParams(navigation.location.search).has("q");
   const [query, setQuery] = useState(q || "");
 
   useEffect(() => {
@@ -28,9 +32,14 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
           <Link to="about">React Router Contacts</Link>
         </h1>
         <div>
-          <Form id="search-form" role="search">
+          <Form
+            id="search-form"
+            role="search"
+            onChange={(e) => submit(e.currentTarget)}
+          >
             <input
               id="q"
+              className={searching ? "loading" : ""}
               name="q"
               type="search"
               placeholder="Search"
@@ -40,7 +49,7 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
             />
             <div
               aria-hidden
-              hidden={true}
+              hidden={!searching}
               id="search-spinner"
             />
           </Form>
@@ -86,7 +95,11 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
       </div>
       <div
         id="detail"
-        className={navigation.state === "loading" ? "loading" : ""}
+        className={
+          navigation.state === "loading" && !searching
+            ? "loading"
+            : ""
+        }
       >
         <Outlet/>
       </div>
