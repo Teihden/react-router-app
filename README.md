@@ -1,4 +1,5 @@
 # React Router Example
+![Render Status](https://img.shields.io/badge/Render-Live-brightgreen?logo=render&style=flat)
 
 ## Description
 
