@@ -16,10 +16,10 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
   const { contacts, q } = loaderData;
   const navigation = useNavigation();
   const submit = useSubmit();
-  const searching =
+  const [query, setQuery] = useState(q || "");
+  const isSearching =
     navigation.location
     && new URLSearchParams(navigation.location.search).has("q");
-  const [query, setQuery] = useState(q || "");
 
   useEffect(() => {
     setQuery(q ?? "");
@@ -44,7 +44,7 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
           >
             <input
               id="q"
-              className={searching ? "loading" : ""}
+              className={isSearching ? "loading" : ""}
               name="q"
               type="search"
               placeholder="Search"
@@ -54,7 +54,7 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
             />
             <div
               aria-hidden
-              hidden={!searching}
+              hidden={!isSearching}
               id="search-spinner"
             />
           </Form>
@@ -101,7 +101,7 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
       <div
         id="detail"
         className={
-          navigation.state === "loading" && !searching
+          navigation.state === "loading" && !isSearching
             ? "loading"
             : ""
         }
